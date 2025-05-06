@@ -1,3 +1,5 @@
+import java.security.InvalidParameterException;
+
 public class Mage extends Character {
 
     // Character description
@@ -18,6 +20,33 @@ public class Mage extends Character {
     // Increases the efficiency and potency of spells
     private int spellChanneling;
 
+    Mage(String name, int level) {
+        super();
+        super.setName(name);
+        super.setLevel(level);
+        super.setDescription(description);
+        this.mysticWisdom = level;
+        this.manaRegeneration = level;
+        this.elementalMastery = level;
+        this.arcaneBarrier = level;
+        this.spellChanneling = level;
+    }
+
+    public void attack(Character enemy) {
+        // Enemy Health = Enemy Health - Warrior attack
+        if(enemy.getHealth() <= 0) {
+            throw new InvalidParameterException("Enemy health must be greater than 0");
+        }
+
+        if(super.getHealth() < 3) {
+            enemy.setHealth(enemy.getHealth() - super.getStrength() + mysticWisdom + elementalMastery);
+        } else {
+            enemy.setHealth(enemy.getHealth() - super.getStrength());
+        }
+        System.out.println("\nHands crackling with energy, the mage utters an incantation. \n" +
+                "Fire erupts from their fingertips, spiraling into a blazing inferno \n" +
+                "that engulfs their foe in searing heat, leaving only smoldering embers.");
+    }
 
     // Calls down a rain of fire, dealing area damage.
     public void abilityFirestorm(Object enemy){}
