@@ -10,7 +10,7 @@ public class Warrior extends Character {
     // Increases reaction speed to counter enemy moves.
     private int battleInstinct;
 
-    // Increases resistance to status effects (stuns, poisons, debuffs).
+    // Increases resistance to special abilities.
     private int titansEndurance;
 
     // Reduces incoming physical damage
@@ -66,50 +66,174 @@ public class Warrior extends Character {
         this.shieldDefence = shieldDefence;
     }
 
+    // Getters and Setters
+
+
+    public int getBattleInstinct() {
+        return battleInstinct;
+    }
+
+    public void setBattleInstinct(int battleInstinct) {
+        this.battleInstinct = battleInstinct;
+    }
+
+    public int getTitansEndurance() {
+        return titansEndurance;
+    }
+
+    public void setTitansEndurance(int titansEndurance) {
+        this.titansEndurance = titansEndurance;
+    }
+
+    public int getArmorMastery() {
+        return armorMastery;
+    }
+
+    public void setArmorMastery(int armorMastery) {
+        this.armorMastery = armorMastery;
+    }
+
+    public int getBerserkerRage() {
+        return berserkerRage;
+    }
+
+    public void setBerserkerRage(int berserkerRage) {
+        this.berserkerRage = berserkerRage;
+    }
+
+    public int getShieldDefence() {
+        return shieldDefence;
+    }
+
+    public void setShieldDefence(int shieldDefence) {
+        this.shieldDefence = shieldDefence;
+    }
+
+    // Methods
     public void attack(Character enemy) {
-        // Enemy Health = Enemy Health - Warrior attack
-        if(enemy.getHealth() <= 0) {
-            throw new InvalidParameterException("Enemy health must be greater than 0");
+
+        int damage, defensePoints, attackPoints, enemyHealth;
+
+        // Verify enemy health is greater than 0
+        enemyHealth = enemy.getHealth();
+        if(enemyHealth <= 0) {
+            throw new InvalidHealthException("Enemy health must be greater than 0");
         }
 
+        // Calculate enemy defense after boosts or deboosts
+        defensePoints = enemy.getEndurance() + enemy.getEnduranceBuffs();
+
+        // Calculate attack points after boosts or deboosts
         if(super.getHealth() < 3) {
-            enemy.setHealth(enemy.getHealth() - super.getStrength() + battleInstinct);
+            attackPoints = (super.getStrength() + berserkerRage);
         } else {
-            enemy.setHealth(enemy.getHealth() - super.getStrength());
+            attackPoints = super.getStrength();
         }
+
+        // Calculate resulting damage
+        damage = attackPoints - defensePoints;
+        if (damage < 0) {
+            damage = 0;
+        }
+
+        // Calculate enemy health after attack
+        enemyHealth = enemyHealth - damage;
+
+        try {
+            enemy.setHealth(enemyHealth);
+        } catch (InvalidHealthException e) {
+            System.out.println(e.getMessage());
+            System.out.println(enemy.getName() + "Fainted!");
+            enemy.setHealth(0);
+        }
+
         System.out.println("\nWith a mighty roar, the warrior lunges forward, blade flashing in the moonlight.\n" +
                 "The enemy barely has time to react before a crushing strike cleaves through their defense,\n" +
                 "sending them staggering backward.");
     }
 
     public void defend(){
-        super.setEndurance(getEndurance() + 1);
+        try {
+            super.setEndurance(getEndurance() + 1);
+        } catch (InvalidEnduranceTooHighException e) {
+            System.out.println(e.getMessage());
+        }
     }
 
     // Spins in place, hitting all surrounding enemies
     public void abilityBladeCyclone(Character enemy) {
-        enemy.setHealth(enemy.getHealth() - 2);
+
+        int damage, defensePoints, attackPoints, enemyHealth;
+
+        // Verify enemy health is greater than 0
+        enemyHealth = enemy.getHealth();
+        if(enemyHealth <= 0) {
+            throw new InvalidParameterException("Enemy health must be greater than 0");
+        }
+
+        // Calculate enemy defense after boosts or deboosts
+        defensePoints = enemy.getEndurance() + enemy.getEnduranceBuffs();
+
+        // Calculate attack points after boosts or deboosts
+        attackPoints = super.getStrength() + 2;
+
+        // Calculate resulting damage
+        damage = attackPoints - defensePoints;
+        if (damage < 0) {
+            damage = 0;
+        }
+
+        // Calculate enemy health after attack
+        enemyHealth = enemyHealth - damage;
+
+        try {
+            enemy.setHealth(enemyHealth);
+
+        } catch (InvalidHealthException e) {
+            System.out.println(enemy.getName() + "Fainted!");
+            enemy.setHealth(0);
+        }
     }
 
     // Temporary immunity to stun and knockback effects.
     public void abilityUnbreakableWill() {
-        super.setEndurance(super.getEndurance() + 2);
+        try {
+            super.setEndurance(super.getEndurance() + 2);
+        } catch (InvalidEnduranceTooHighException e) {
+            super.setEndurance(0);
+            System.out.println("Endurance level is too high!");
+        }
     }
 
-    // Smashes the ground, creating shockwaves that damage and slow enemies.
+    // Smashes the ground, creating shock waves that damage and slow enemies.
     public void abilityEarthshatter(Character enemy) {
-        enemy.setHealth(enemy.getHealth() - 3);
+        try {
+            enemy.setHealth(enemy.getHealth() - 3);
+        } catch (InvalidHealthException e) {
+            enemy.setHealth(0);
+            System.out.println(enemy.getName() + " fainted!");
+        }
     }
 
     // Wields two massive weapons at once, doubling damage output.
     public void abilityTitansGrip(Character enemy) {
-        int damage = super.getStrength() * 2;
-        enemy.setHealth(enemy.getHealth() - damage);
+        try {
+            int damage = super.getStrength() * 2;
+            enemy.setHealth(enemy.getHealth() - damage);
+        } catch (InvalidHealthException e) {
+            enemy.setHealth(0);
+            System.out.println(enemy.getName() + " fainted!");
+        }
     }
 
     // Intimidates enemies, reduces ability.
     public void abilityWarCry(Character enemy) {
-        enemy.setAgility(getAgility() - 1);
+        try {
+            enemy.setAgility(getAgility() - 1);
+        } catch (InvalidAgilityTooLowException e) {
+            enemy.setAgility(0);
+            System.out.println("Agility level is too low!");
+        }
     }
 
     public void useAbility(Scanner scanner, Character enemy) {
@@ -138,6 +262,10 @@ public class Warrior extends Character {
                 break;
         }
 
+    }
+
+    public int getEnduranceBuffs(){
+        return this.battleInstinct + this.armorMastery;
     }
 
 

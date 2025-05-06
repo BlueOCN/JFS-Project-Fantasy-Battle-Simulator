@@ -1,7 +1,7 @@
 import java.util.ArrayList;
 import java.util.UUID;
 
-public class Character {
+public abstract class Character {
 
     private String id;
     private String name;
@@ -58,7 +58,10 @@ public class Character {
         return level;
     }
 
-    public void setLevel(int level) {
+    public void setLevel(int level) throws InvalidLevelException{
+        if (level < 1 || level > 100) {
+            throw new InvalidLevelException("Level must be between 1 and 100");
+        }
         this.level = level;
     }
 
@@ -66,15 +69,24 @@ public class Character {
         return health;
     }
 
-    public void setHealth(int health) {
-        this.health = health;
+    public void setHealth(int newHealth) throws InvalidHealthException{
+        if (newHealth < 0) {
+            throw new InvalidHealthException("Health must be a positive number");
+        }
+        this.health = newHealth;
+
     }
 
     public int getStrength() {
         return strength;
     }
 
-    public void setStrength(int strength) {
+    public void setStrength(int strength) throws InvalidStrengthTooLowException, InvalidStrengthTooHighException{
+        if (strength < 0) {
+            throw new InvalidStrengthTooLowException("Strength must be greater or equal to 0");
+        } else if (strength > 100) {
+            throw new InvalidStrengthTooHighException("Strength must be smaller or equal to 100");
+        }
         this.strength = strength;
     }
 
@@ -82,15 +94,27 @@ public class Character {
         return endurance;
     }
 
-    public void setEndurance(int endurance) {
+    public void setEndurance(int endurance) throws InvalidEnduranceTooLowException, InvalidEnduranceTooHighException{
+        if (endurance < 0) {
+            throw new InvalidEnduranceTooLowException("Endurance must be greater or equal to 0");
+        } else if (endurance > 100) {
+            throw new InvalidEnduranceTooHighException("Endurance must be smaller or equal to 100");
+        }
         this.endurance = endurance;
     }
+
+    public abstract int getEnduranceBuffs();
 
     public int getIntelligence() {
         return intelligence;
     }
 
-    public void setIntelligence(int intelligence) {
+    public void setIntelligence(int intelligence) throws InvalidIntelligenceTooLowException, InvalidIntelligenceTooHighException{
+        if (intelligence < 0) {
+            throw new InvalidIntelligenceTooLowException("Intelligence must be greater or equal to 0");
+        } else if (intelligence > 100) {
+            throw new InvalidIntelligenceTooHighException("Intelligence must be smaller or equal to 100");
+        }
         this.intelligence = intelligence;
     }
 
@@ -99,6 +123,11 @@ public class Character {
     }
 
     public void setAgility(int agility) {
+        if (agility < 0) {
+            throw new InvalidAgilityTooLowException("Agility must be a positive number");
+        } else if (agility > 100) {
+            throw new InvalidAgilityTooHighException("Agility must be smaller or equal to 100");
+        }
         this.agility = agility;
     }
 
@@ -107,12 +136,15 @@ public class Character {
     }
 
     public void setAbilities(ArrayList<String> abilities) {
+        if (abilities == null || abilities.isEmpty()) {
+            throw new InvalidAbilitiesException("Abilities list cannot be null or empty");
+        }
         this.abilities = abilities;
     }
 
     public void displayAbilities() {
         for (String ability : abilities){
-            System.out.print(abilities.indexOf(ability) + 1 + ". " + ability + "\t");
+            System.out.print(abilities.indexOf(ability) + 1 + ". " + ability + "\t\t");
         }
     }
 

@@ -2,13 +2,10 @@ import java.util.Scanner;
 
 public class BattleSimulator {
     public static void main(String[] args) {
-        // Main
+
 
         Warrior warrior = new Warrior("Warrior 1", 1);
         Archer archer = new Archer("Archer 1", 1);
-
-        System.out.println("Warrior: " + warrior);
-        System.out.println("Archer: " + archer);
 
         Warrior warriorCopy = warrior;
         Archer archerCopy = archer;
@@ -21,9 +18,7 @@ public class BattleSimulator {
             Scanner scanner = new Scanner(System.in);
 
             // Display stats
-            warriorCopy.displayStats();
-            archerCopy.displayStats();
-            System.out.println(turnOwner);
+            displayStats(warriorCopy, archerCopy);
 
             // Prompt for an action (attack, defend, special abilities)
             System.out.print("\n1. Attack\t2. Defend\t3. Special Ability");
@@ -52,13 +47,17 @@ public class BattleSimulator {
                         warriorCopy.useAbility(scanner, archerCopy);
                     } else {
                         archerCopy.displayAbilities();
-                        archerCopy.useAbility(scanner, archerCopy);
+                        archerCopy.useAbility(scanner, warriorCopy);
                     }
                     turnOwner = !turnOwner;
                     break;
             }
 
-
+            if (warriorCopy.getHealth() == 0 || archerCopy.getHealth() == 0) {
+                displayStats(warriorCopy, archerCopy);
+                System.out.print("\nBattle End!\n");
+                break;
+            }
 
 
         } while (true);
@@ -66,4 +65,24 @@ public class BattleSimulator {
 
 
     }
+
+    public static void displayStats(Character warrior, Character archer) {
+        System.out.printf(
+                "\n%-50s %30s %50s\n" +
+                        "%-50s %30s %50s\n" +
+                        "%-50s %30s %50s\n" +
+                        "%-50s %30s %50s\n" +
+                        "%-50s %30s %50s\n" +
+                        "%-50s %30s %50s\n" +
+                        "%-50s %30s %50s\n",
+                warrior.getName(), "", archer.getName(),
+                warrior.getDescription(), "", archer.getDescription(),
+                "Level " + warrior.getLevel(), "", archer.getLevel() + " Level",
+                "Health " + warrior.getHealth(), "", archer.getHealth() + " Health",
+                "Strength " + warrior.getStrength(), "", archer.getStrength() + " Strength",
+                "Endurance " + warrior.getEndurance(), "", archer.getEndurance() + " Endurance",
+                "Agility " + warrior.getAgility(), "", archer.getAgility() + " Agility"
+        );
+    }
+
 }

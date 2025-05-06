@@ -63,4 +63,8 @@ public class Mage extends Character {
     // Opens a dimensional tear, pulling enemies into the abyss for heavy damage.
     public void abilityVoidRift(Object enemy) {}
 
+    public int getEnduranceBuffs(){
+        return this.arcaneBarrier;
+    }
+
 }
