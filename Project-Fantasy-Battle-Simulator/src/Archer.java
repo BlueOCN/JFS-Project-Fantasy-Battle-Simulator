@@ -1,13 +1,10 @@
-public class Archer {
+public class Archer extends Character{
 
     // Character description
-    private static String description = "Archer (Ranged Combat & Precision Strikes)";
+    private static final String description = "Archer (Ranged Combat & Precision Strikes)";
 
-    // Character id
-    private String id;
-
-    // Improves accuracy and agility in combat
-    private int dexterity;
+    // Boosts precision for long-range shots
+    private int accuracy;
 
     // Enhances critical hit chance and bow handling
     private int focus;
@@ -18,7 +15,7 @@ public class Archer {
     // Grants the ability to fire multiple arrows at once
     private int multiShot;
 
-    // Increases dodge rate against incoming attacks
+    // Enhances dodge rate against incoming attacks
     private int evasion;
 
 

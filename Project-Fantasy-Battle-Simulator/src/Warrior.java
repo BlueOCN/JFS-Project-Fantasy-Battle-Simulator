@@ -1,16 +1,13 @@
-public class Warrior {
+public class Warrior extends Character {
 
     // Character description
-    private static String description = "Warrior (Frontline Tank & Melee Fighter)";
+    private static final String description = "Warrior (Frontline Tank & Melee Fighter)";
 
-    // Character id
-    private String id;
+    // Increases reaction speed to counter enemy moves.
+    private int battleInstinct;
 
-    // Determines physical attack power
-    private int strength;
-
-    // Increases resistance to damage and stamina for long battles
-    private int endurance;
+    // Increases resistance to status effects (stuns, poisons, debuffs).
+    private int titansEndurance;
 
     // Reduces incoming physical damage
     private int armorMastery;

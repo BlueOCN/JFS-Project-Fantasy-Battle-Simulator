@@ -1,13 +1,10 @@
-public class Mage {
+public class Mage extends Character {
 
     // Character description
-    private static String description = "Mage (Spellcaster & Arcane Specialist)";
+    private static final String description = "Mage (Spellcaster & Arcane Specialist)";
 
-    // Character id
-    private String id;
-
-    // Governs spell power and mana pool
-    private int intelligence;
+    // Improves magical crit rate and effectiveness of buffs/debuffs.
+    private int mysticWisdom;
 
     // Speeds up magic recovery over time
     private int manaRegeneration;
