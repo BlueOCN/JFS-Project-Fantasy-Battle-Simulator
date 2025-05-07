@@ -16,9 +16,6 @@ public class Archer extends Character{
     // Reduces visibility to enemies, making ambushes more effective
     private int stealth;
 
-    // Grants the ability to fire multiple arrows at once
-    private int multiShot;
-
     // Enhances dodge rate against incoming attacks
     private int evasion;
 
@@ -30,7 +27,6 @@ public class Archer extends Character{
         this.accuracy = level;
         this.focus = level;
         this.stealth = level;
-        this.multiShot = level;
         this.evasion = level;
 
         // Add abilities
@@ -71,14 +67,6 @@ public class Archer extends Character{
 
     public void setStealth(int stealth) {
         this.stealth = stealth;
-    }
-
-    public int getMultiShot() {
-        return multiShot;
-    }
-
-    public void setMultiShot(int multiShot) {
-        this.multiShot = multiShot;
     }
 
     public int getEvasion() {
@@ -257,7 +245,6 @@ public class Archer extends Character{
                 "accuracy=" + accuracy +
                 ", focus=" + focus +
                 ", stealth=" + stealth +
-                ", multiShot=" + multiShot +
                 ", evasion=" + evasion +
                 "} " + super.toString();
     }

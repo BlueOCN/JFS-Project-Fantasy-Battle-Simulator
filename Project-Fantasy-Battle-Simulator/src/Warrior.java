@@ -106,6 +106,9 @@ public class Warrior extends Character {
     }
 
     public void setShieldDefence(int shieldDefence) {
+        if( shieldDefence < 0 || shieldDefence > 100) {
+            throw new InvalidShieldDefenceException("Shield Defence must be between 0 and 100");
+        }
         this.shieldDefence = shieldDefence;
     }
 
@@ -154,8 +157,8 @@ public class Warrior extends Character {
 
     public void defend(){
         try {
-            super.setEndurance(getEndurance() + 1);
-        } catch (InvalidEnduranceTooHighException e) {
+            setShieldDefence(shieldDefence + 1);
+        } catch (InvalidShieldDefenceException e) {
             System.out.println(e.getMessage());
         }
     }
@@ -168,7 +171,7 @@ public class Warrior extends Character {
         // Verify enemy health is greater than 0
         enemyHealth = enemy.getHealth();
         if(enemyHealth <= 0) {
-            throw new InvalidParameterException("Enemy health must be greater than 0");
+            throw new InvalidHealthException("Enemy health must be greater than 0");
         }
 
         // Calculate enemy defense after boosts or deboosts

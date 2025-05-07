@@ -6,9 +6,20 @@ public class BattleSimulator {
 
         Warrior warrior = new Warrior("Warrior 1", 1);
         Archer archer = new Archer("Archer 1", 1);
+        Mage mage = new Mage("Mage 1", 1);
 
         Warrior warriorCopy = warrior;
         Archer archerCopy = archer;
+        Mage mageCopy = mage;
+
+        System.out.println("Welcome to Battle Simulator!");
+        System.out.println("1. Warrior");
+        System.out.println("2. Archer");
+        System.out.println("3. Mage");
+        System.out.print("Choose your character (1 to 3): ");
+        Scanner scanner2 = new Scanner(System.in);
+        int characterSelection = scanner2.nextInt();
+
 
         boolean turnOwner = true;
 
