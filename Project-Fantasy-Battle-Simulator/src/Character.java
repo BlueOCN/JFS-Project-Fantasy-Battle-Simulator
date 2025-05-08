@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Scanner;
 import java.util.UUID;
 
 public abstract class Character {
@@ -175,4 +176,8 @@ public abstract class Character {
                 ", abilities=" + abilities +
                 '}';
     }
+
+    public abstract <T extends Character> void attack(T enemy);
+    public abstract <T extends Character> void defend();
+    public abstract <T extends Character> void useAbility(int choice, T enemy);
 }

@@ -150,9 +150,7 @@ public class Warrior extends Character {
             enemy.setHealth(0);
         }
 
-        System.out.println("\nWith a mighty roar, the warrior lunges forward, blade flashing in the moonlight.\n" +
-                "The enemy barely has time to react before a crushing strike cleaves through their defense,\n" +
-                "sending them staggering backward.");
+        System.out.println("\nHe tightens the grip on his weapon, muscles coiled with controlled force. A deep breath steadies him—then, with explosive speed, He charges forward. His blade arcs through the air, aimed to strike with precision. Heart pounding, He commits to the attack, knowing only battle will decide the outcome.");
     }
 
     public void defend(){
@@ -161,6 +159,7 @@ public class Warrior extends Character {
         } catch (InvalidShieldDefenceException e) {
             System.out.println(e.getMessage());
         }
+        System.out.println("The warrior grips his shield, planting the feet firmly. A sudden instinct drives him to raise it—an incoming strike clashes against the steel, forcing him back. The armor absorbs the blow, but He hold his ground, muscles tensed. Eyes locked forward, He prepares for the next move, ready to counter.");
     }
 
     // Spins in place, hitting all surrounding enemies
@@ -189,6 +188,8 @@ public class Warrior extends Character {
         // Calculate enemy health after attack
         enemyHealth = enemyHealth - damage;
 
+        System.out.println("\nMuscles tense, He grips his weapon tightly. With a fierce roar, He channels raw power, spinning into a whirlwind of steel—BladeCyclone unleashed! His blade slashes through the air in a devastating arc, cutting through space like a storm. Dust and energy swirl around him as he strikes with unrelenting force.");
+
         try {
             enemy.setHealth(enemyHealth);
 
@@ -200,6 +201,7 @@ public class Warrior extends Character {
 
     // Temporary immunity to stun and knockback effects.
     public void abilityUnbreakableWill() {
+        System.out.println("\nHe plants his feet firmly, gripping his weapon with unwavering resolve. Unbreakable Will surges through his veins—his body hardens, defying pain, fear, and fatigue. A battle cry erupts as his stance becomes immovable, his spirit indomitable. No force will break him. The enemy strikes. He does not falter. He endures.");
         try {
             super.setEndurance(super.getEndurance() + 2);
         } catch (InvalidEnduranceTooHighException e) {
@@ -210,6 +212,7 @@ public class Warrior extends Character {
 
     // Smashes the ground, creating shock waves that damage and slow enemies.
     public void abilityEarthshatter(Character enemy) {
+        System.out.println("\nHe grips his weapon, feeling the raw energy build beneath his feet. With a mighty roar, He raises his blade and slam it into the ground—Earthshatter erupts! The battlefield trembles, shockwaves rip through the earth, sending debris and energy outward in a devastating blast. Power surges, unstoppable, as He unleashes destruction.");
         try {
             enemy.setHealth(enemy.getHealth() - 3);
         } catch (InvalidHealthException e) {
@@ -220,6 +223,7 @@ public class Warrior extends Character {
 
     // Wields two massive weapons at once, doubling damage output.
     public void abilityTitansGrip(Character enemy) {
+        System.out.println("\nHe tightens his grip, muscles straining as Titan’s Grip surges through him. His weapon feels like an extension of my will—unyielding, unstoppable. With a mighty swing, He wields its massive force, each strike backed by sheer dominance. The ground quakes beneath his power as He commits to the devastating blow.");
         try {
             int damage = super.getStrength() * 2;
             enemy.setHealth(enemy.getHealth() - damage);
@@ -231,6 +235,7 @@ public class Warrior extends Character {
 
     // Intimidates enemies, reduces ability.
     public void abilityWarCry(Character enemy) {
+        System.out.println("\nHe draws a deep breath, feeling raw energy surge through him. WarCry erupts—a thunderous roar shakes the battlefield, a shockwave of sheer force rippling outward. His spirit ignites, muscles tensed, power swelling within. The ground trembles beneath his feet as He charges forward, fueled by unstoppable rage and unwavering might.");
         try {
             enemy.setAgility(getAgility() - 1);
         } catch (InvalidAgilityTooLowException e) {
@@ -239,28 +244,22 @@ public class Warrior extends Character {
         }
     }
 
-    public void useAbility(Scanner scanner, Character enemy) {
-        System.out.println();
-        System.out.print("What do you wan to do? (Choose 1-5): ");
-        switch (scanner.nextInt()){
+    public void useAbility(int choice, Character enemy) {
+
+        switch (choice){
             case 1:
-                System.out.println("abilityBladeCyclone");
                 abilityBladeCyclone(enemy);
                 break;
             case 2:
-                System.out.println("abilityUnbreakableWill");
                 abilityUnbreakableWill();
                 break;
             case 3:
-                System.out.println("abilityEarthshatter");
                 abilityEarthshatter(enemy);
                 break;
             case 4:
-                System.out.println("abilityTitansGrip");
                 abilityTitansGrip(enemy);
                 break;
             case 5:
-                System.out.println("abilityWarCry");
                 abilityWarCry(enemy);
                 break;
         }

@@ -127,13 +127,17 @@ public class Archer extends Character{
         } catch (InvalidEnduranceTooHighException e) {
             System.out.println(e.getMessage());
         }
+        System.out.println("\nInstinct takes over—the archer swiftly raises his bow, dodging to the side as \n" +
+                           "an incoming strike barely grazes past. My keen reflexes kick in; I roll into\n" +
+                           "cover and pull a defensive stance. Eyes scanning the battlefield, I brace myself, \n" +
+                           "ready to counter as soon as my opponent reveals themselves.\n");
     }
 
     // Fires an arrow that ignores armor and deals bonus damage.
     public void abilityPiercingShot(Character enemy) {
         int bonusDamage = 1;
         int damage = super.getStrength() + bonusDamage;
-
+        System.out.println("\tThe archer steadies their stance, exhaling slowly as he draws back the bowstring. PiercingShot charges—arcane energy crackling along the arrow’s shaft. With unwavering focus, he releases, the projectile slicing through the air with lethal precision. Eyes locked forward, he remains poised, ready for whatever unfolds after the arrow finds its mark.");
         try {
             enemy.setHealth(enemy.getHealth() - damage);
         } catch (InvalidHealthException e) {
@@ -144,6 +148,7 @@ public class Archer extends Character{
 
     // Teleports a short distance, evading attacks.
     public void abilityShadowStep() {
+        System.out.println("\nThe archer exhales calmly, sensing danger closing in. ShadowStep awakens—a subtle shift, a flicker in the air. In an instant, they vanish, a blur of motion slipping into the shadows. Their footsteps make no sound, their presence undetectable. The attack arrives, but the archer is already elsewhere, unseen, untouched.");
         try {
             setEvasion(getEvasion() + 1);
         } catch (InvalidEvasionTooHighException e) {
@@ -156,7 +161,6 @@ public class Archer extends Character{
     public void abilityExplosiveVolley(Character enemy) {
 
         int damage, defensePoints, attackPoints, enemyHealth;
-
 
         // Verify enemy health is greater than 0
         enemyHealth = enemy.getHealth();
@@ -179,6 +183,9 @@ public class Archer extends Character{
 
         // Calculate enemy health after attack
         enemyHealth = enemyHealth - damage;
+
+        System.out.println("\nThe archer steadies their stance, breath controlled, eyes sharp. With practiced precision, he nocks multiple arrows, each humming with volatile energy. ExplosiveVolley ignites—fingers release, sending the projectiles streaking through the air. A fiery eruption follows, bursts of force rippling outward as the arrows detonate upon impact, engulfing the battlefield in chaos.");
+
         try {
             enemy.setHealth(enemyHealth);
         } catch (InvalidHealthException e) {
@@ -189,6 +196,7 @@ public class Archer extends Character{
 
     // Temporarily increases accuracy and critical hit chance.
     public void abilityHawkEye() {
+        System.out.println("\nThe archer narrows their eyes, pulse steady, breath controlled. HawkEye activates—time slows as their senses sharpen beyond mortal limits. Every detail crystallizes, every movement predicted. They spot the incoming strike before it lands, analyzing its trajectory with razor precision. With unshakable focus, they brace for the moment of impact.");
         try {
             setAccuracy(getAccuracy() + 1);
             setFocus(getFocus() + 1);
@@ -204,6 +212,7 @@ public class Archer extends Character{
     // Poisons enemies, dealing damage over time.
     public void abilityVenomShot(Character enemy) {
         int damage = super.getStrength() + 1;
+        System.out.println("\nThe archer steadies their grip, drawing a dark-tipped arrow from the quiver. A faint, toxic shimmer dances along its surface as VenomShot activates. With cold precision, they pull the bowstring taut, eyes locked forward. The arrow streaks through the air, leaving behind a faint green trail—silent, swift, and deadly.");
         try {
             enemy.setHealth(enemy.getHealth() - damage);
         } catch (InvalidHealthException e) {
@@ -212,10 +221,9 @@ public class Archer extends Character{
         }
     }
 
-    public void useAbility(Scanner scanner, Character enemy) {
-        System.out.println();
-        System.out.print("What do you wan to do? (Choose 1-5): ");
-        switch (scanner.nextInt()){
+    public void useAbility(int choice, Character enemy) {
+
+        switch (choice){
             case 1:
                 abilityPiercingShot(enemy);
                 break;
